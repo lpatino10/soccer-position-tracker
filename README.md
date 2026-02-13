@@ -8,6 +8,8 @@ The goal is to build something that will:
 1. Convert position data into EPTS format
 1. Support visual playback of tracked games (e.g. watching my dot move on a field)
 
+![flow diagram](./docs/soccer-position-tracker.png)
+
 ### TODO:
 ✅ Generate valid EPTS metadata
 - Successfully collect and store position data during games
