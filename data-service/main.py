@@ -1,14 +1,10 @@
 from datetime import datetime
 from fastapi import FastAPI
 from models import Game, Field, TrackingEvent
-from supabase import create_client, Client
-from epts_generator import generate_metadata, generate_tracking_event_data, MetadataParams, TrackingEventFileParams
+from epts_generator import clean_up_temp_files, generate_metadata, generate_tracking_event_data, MetadataParams, TrackingEventFileParams
+from supabase_client import supabase
 
 app = FastAPI()
-supabase: Client = create_client(
-  "https://paugmeoshsaakpmuwsoo.supabase.co",
-  "sb_publishable_YW4rIYbyDM9k6Rlisuk_yw_YSbt9p2V"
-)
 
 @app.get("/")
 def read_root():
@@ -54,3 +50,6 @@ def create_game_files(game_id: str):
       tracking_events=tracking_events
     )
   )
+
+  # 6. Cleanup.
+  clean_up_temp_files()

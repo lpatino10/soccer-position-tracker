@@ -1,6 +1,8 @@
 from datetime import datetime
 from models import Field, TrackingEvent
+from pathlib import Path
 from pydantic import BaseModel
+from supabase_client import supabase
 import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
@@ -119,13 +121,20 @@ def generate_metadata(params: MetadataParams):
   })
 
   # Output
-  # TODO: Save somewhere else.
   raw_string = ET.tostring(main, "utf-8")
   reparsed = minidom.parseString(raw_string)
   pretty_output = reparsed.toprettyxml(indent="  ")
-  file_name = f"{params.field_name}_{params.start_datetime.month}_{params.start_datetime.day}_{params.start_datetime.year}_metadata.xml"
-  with open(file_name, "w") as f:
+
+  temp_file_path = "temp/metadata.xml"
+  with open(temp_file_path, "w") as f:
     f.write(pretty_output)
+
+  supabase_file_path = f"{params.field_name}_{params.start_datetime.month}_{params.start_datetime.day}_{params.start_datetime.year}/metadata.xml"
+  with open(temp_file_path, "rb") as f:
+    supabase.storage.from_("games").upload(
+      file=f,
+      path=supabase_file_path
+    )
 
 def get_normalized_coordinates(field: Field, lng_diff, lat_diff, tracking_event: TrackingEvent):
   norm_x = (tracking_event.lng - field.min_lng) / lng_diff
@@ -135,10 +144,26 @@ def get_normalized_coordinates(field: Field, lng_diff, lat_diff, tracking_event:
 def generate_tracking_event_data(params: TrackingEventFileParams):
   lng_diff = params.field.max_lng - params.field.min_lng
   lat_diff = params.field.max_lat - params.field.min_lat
-  file_name = f"{params.field.name}_{params.start_datetime.month}_{params.start_datetime.day}_{params.start_datetime.year}_tracking.txt"
   
-  with open(file_name, "w") as f:
+  temp_file_path = "temp/tracking.txt"
+  with open(temp_file_path, "w") as f:
     for index, event in enumerate(params.tracking_events):
       coords = get_normalized_coordinates(params.field, lng_diff, lat_diff, event)
-
       f.write(f"{index + 1}:{coords[0]},{coords[1]}" + "\n")
+
+  supabase_file_path = f"{params.field.name}_{params.start_datetime.month}_{params.start_datetime.day}_{params.start_datetime.year}/tracking.txt"
+  with open(temp_file_path, "rb") as f:
+    supabase.storage.from_("games").upload(
+      file=f,
+      path=supabase_file_path
+    )
+
+def clean_up_temp_files():
+  temp_folder_path = Path("./temp")
+
+  for file in temp_folder_path.iterdir():
+    if file.is_file():
+        try:
+            file.unlink()
+        except OSError as e:
+            print(f"Error deleting {file}: {e}")
