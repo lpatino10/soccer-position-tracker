@@ -27,3 +27,10 @@ class TrackingEvent(BaseModel):
   lat: Decimal
   lng: Decimal
   game_id: str
+
+class WebhookPayload(BaseModel):
+  type: str
+  table: str
+  schema: str
+  record: Game
+  old_record: Game

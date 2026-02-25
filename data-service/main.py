@@ -1,6 +1,6 @@
 from datetime import datetime
 from fastapi import FastAPI
-from models import Game, Field, TrackingEvent
+from models import Game, Field, TrackingEvent, WebhookPayload
 from epts_generator import clean_up_temp_files, generate_metadata, generate_tracking_event_data, MetadataParams, TrackingEventFileParams
 from supabase_client import supabase
 
@@ -9,6 +9,10 @@ app = FastAPI()
 @app.get("/")
 def read_root():
   return { "Hello": "World" }
+
+@app.post("/game")
+def create_game_files_from_webhook(body: WebhookPayload):
+  print(body.record.model_dump())
 
 @app.post("/game/{game_id}")
 def create_game_files(game_id: str):
