@@ -10,6 +10,7 @@ def read_root():
 
 @app.post("/game")
 def create_game_files_from_webhook(body: WebhookPayload):
+  print(body.model_dump_json())
   create_game_files(body.record.id)
 
 @app.post("/game/{game_id}")
