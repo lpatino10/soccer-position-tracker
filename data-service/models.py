@@ -1,5 +1,5 @@
 from decimal import Decimal
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class Game(BaseModel):
   id: str
@@ -31,6 +31,6 @@ class TrackingEvent(BaseModel):
 class WebhookPayload(BaseModel):
   type: str
   table: str
-  schema: str
+  db_schema: str = Field(validation_alias='schema')
   record: Game
   old_record: Game

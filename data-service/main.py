@@ -1,18 +1,8 @@
-from fastapi import FastAPI, Request
-from fastapi.encoders import jsonable_encoder
-from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI
 from models import WebhookPayload
 from epts_generator import create_game_files
 
 app = FastAPI()
-
-@app.exception_handler(RequestValidationError)
-async def validation_exception_handler(request: Request, exc: RequestValidationError):
-  return JSONResponse(
-    status_code=422,
-    content=jsonable_encoder({"detail": exc.errors(), "body": exc.body}),
-  )
 
 @app.get("/")
 def read_root():
