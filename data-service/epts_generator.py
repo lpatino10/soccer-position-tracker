@@ -1,5 +1,5 @@
 from datetime import datetime
-from models import Field, Game, TrackingEvent
+from models import SoccerField, Game, TrackingEvent
 from pathlib import Path
 from pydantic import BaseModel
 from supabase_client import supabase
@@ -18,7 +18,7 @@ class MetadataParams(BaseModel):
 
 class TrackingEventFileParams(BaseModel):
   start_datetime: datetime
-  field: Field
+  field: SoccerField
   tracking_events: list[TrackingEvent]
 
 def generate_metadata(params: MetadataParams):
@@ -136,7 +136,7 @@ def generate_metadata(params: MetadataParams):
       path=supabase_file_path
     )
 
-def get_normalized_coordinates(field: Field, lng_diff, lat_diff, tracking_event: TrackingEvent):
+def get_normalized_coordinates(field: SoccerField, lng_diff, lat_diff, tracking_event: TrackingEvent):
   norm_x = (tracking_event.lng - field.min_lng) / lng_diff
   norm_y = (tracking_event.lat - field.min_lat) / lat_diff
   return (norm_x, norm_y)
@@ -175,7 +175,7 @@ def create_game_files(game_id: str):
 
   # 2. Fetch field row in DB to get dimensions.
   raw_field = supabase.table("Field").select("*").eq("id", game.field_id).limit(1).execute().data[0]
-  field = Field(**raw_field)
+  field = SoccerField(**raw_field)
 
   # 3. Fetch TrackingEvent rows to get positions.
   tracking_events = [TrackingEvent(**e) for e in supabase.table("TrackingEvent").select("*").eq("game_id", game.id).order("timestamp", desc=False).execute().data]

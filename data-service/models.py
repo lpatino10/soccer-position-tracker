@@ -9,7 +9,7 @@ class Game(BaseModel):
   opponent_score: int
   field_id: int
 
-class Field(BaseModel):
+class SoccerField(BaseModel):
   id: int
   created_at: str
   name: str
@@ -31,6 +31,6 @@ class TrackingEvent(BaseModel):
 class WebhookPayload(BaseModel):
   type: str
   table: str
-  db_schema: str = Field(validation_alias='schema')
+  db_schema: str = Field(alias='schema')
   record: Game
   old_record: Game
