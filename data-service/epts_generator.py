@@ -7,6 +7,7 @@ import xml.etree.ElementTree as ET
 from xml.dom import minidom
 
 class MetadataParams(BaseModel):
+  game_id: str
   start_datetime: datetime
   end_datetime: datetime
   my_team_score: int
@@ -17,7 +18,7 @@ class MetadataParams(BaseModel):
   frame_count: int
 
 class TrackingEventFileParams(BaseModel):
-  start_datetime: datetime
+  game_id: str
   field: SoccerField
   tracking_events: list[TrackingEvent]
 
@@ -133,7 +134,7 @@ def generate_metadata(params: MetadataParams):
   with open(temp_file_path, "w") as f:
     f.write(pretty_output)
 
-  supabase_file_path = f"{params.field_name}_{params.start_datetime.month}_{params.start_datetime.day}_{params.start_datetime.year}/metadata.xml"
+  supabase_file_path = f"{params.game_id}/metadata.xml"
   with open(temp_file_path, "rb") as f:
     supabase.storage.from_("games").upload(
       file=f,
@@ -160,7 +161,7 @@ def generate_tracking_event_data(params: TrackingEventFileParams):
       coords = get_normalized_coordinates(params.field, lng_diff, lat_diff, event)
       f.write(f"{index + 1}:{coords[0]},{coords[1]}" + "\n")
 
-  supabase_file_path = f"{params.field.name}_{params.start_datetime.month}_{params.start_datetime.day}_{params.start_datetime.year}/tracking.txt"
+  supabase_file_path = f"{params.game_id}/tracking.txt"
   with open(temp_file_path, "rb") as f:
     supabase.storage.from_("games").upload(
       file=f,
@@ -197,6 +198,7 @@ def create_game_files(game_id: str):
   field_width = 60 if field.width is None else field.width
   generate_metadata(
     MetadataParams(
+      game_id=game_id,
       start_datetime=start_datetime,
       end_datetime=end_datetime,
       my_team_score=game.my_team_score,
@@ -211,7 +213,7 @@ def create_game_files(game_id: str):
   # 5. Create event file with locations.
   generate_tracking_event_data(
     TrackingEventFileParams(
-      start_datetime=start_datetime,
+      game_id=game_id,
       field=field,
       tracking_events=tracking_events
     )
