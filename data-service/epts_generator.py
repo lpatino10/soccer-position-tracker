@@ -125,6 +125,10 @@ def generate_metadata(params: MetadataParams):
   reparsed = minidom.parseString(raw_string)
   pretty_output = reparsed.toprettyxml(indent="  ")
 
+  # Create temp folder if necessary.
+  temp_folder = Path("temp")
+  temp_folder.mkdir(parents=True, exist_ok=True)
+
   temp_file_path = "temp/metadata.xml"
   with open(temp_file_path, "w") as f:
     f.write(pretty_output)
@@ -159,7 +163,7 @@ def generate_tracking_event_data(params: TrackingEventFileParams):
     )
 
 def clean_up_temp_files():
-  temp_folder_path = Path("./temp")
+  temp_folder_path = Path("temp")
 
   for file in temp_folder_path.iterdir():
     if file.is_file():
