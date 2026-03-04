@@ -11,13 +11,20 @@ import CoreLocation
 @Observable
 final class LocationManager {
     private let locationManager = CLLocationManager()
+    private let backgroundActivity = CLBackgroundActivitySession()
     
     func requestUserAuthorization() async throws {
-        locationManager.requestWhenInUseAuthorization()
+        if locationManager.authorizationStatus == .notDetermined || locationManager.authorizationStatus == .authorizedWhenInUse {
+            locationManager.requestAlwaysAuthorization()
+            locationManager.allowsBackgroundLocationUpdates = true
+        }
+        
+        if (locationManager.authorizationStatus == .authorizedAlways) {
+            print("ALWAYS AUTHORIZED")
+        }
     }
  
     func startCurrentLocationUpdates(gameId: UUID) async throws {
-        locationManager.allowsBackgroundLocationUpdates = true
         locationManager.startUpdatingLocation()
 
         for try await locationUpdate in CLLocationUpdate.liveUpdates(.fitness) {
@@ -31,5 +38,6 @@ final class LocationManager {
     
     func stopTrackingLocation() {
         locationManager.stopUpdatingLocation()
+        backgroundActivity.invalidate()
     }
 }

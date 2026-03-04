@@ -119,8 +119,7 @@ struct ContentView: View {
         }
         .task {
             try? await locationManager.requestUserAuthorization()
-        }
-        .task {
+
             guard let fields = try? await MySupabaseClient.shared.listFields() else { return }
             fieldOptions = fields
             selectedFieldId = fields[0].id
