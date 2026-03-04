@@ -5,8 +5,8 @@ class Game(BaseModel):
   id: str
   created_at: str
   position: str
-  my_team_score: int
-  opponent_score: int
+  my_team_score: int | None
+  opponent_score: int | None
   field_id: int
 
 class SoccerField(BaseModel):
