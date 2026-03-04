@@ -1,4 +1,5 @@
 from decimal import Decimal
+from enum import StrEnum
 from pydantic import BaseModel, Field
 
 class Game(BaseModel):
@@ -8,6 +9,10 @@ class Game(BaseModel):
   my_team_score: int | None
   opponent_score: int | None
   field_id: int
+
+class OrientationEnum(StrEnum):
+  EW = "EW"
+  NS = "NS"
 
 class SoccerField(BaseModel):
   id: int
@@ -19,6 +24,7 @@ class SoccerField(BaseModel):
   max_lat: Decimal
   min_lng: Decimal
   max_lng: Decimal
+  orientation: OrientationEnum
 
 class TrackingEvent(BaseModel):
   id: str
@@ -31,6 +37,6 @@ class TrackingEvent(BaseModel):
 class WebhookPayload(BaseModel):
   type: str
   table: str
-  db_schema: str = Field(alias='schema')
+  db_schema: str = Field(alias="schema")
   record: Game
   old_record: Game

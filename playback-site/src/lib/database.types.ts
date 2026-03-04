@@ -24,6 +24,7 @@ export type Database = {
           min_lat: number
           min_lng: number
           name: string
+          orientation: Database["public"]["Enums"]["orientation"]
           width: number
         }
         Insert: {
@@ -35,6 +36,7 @@ export type Database = {
           min_lat: number
           min_lng: number
           name: string
+          orientation?: Database["public"]["Enums"]["orientation"]
           width: number
         }
         Update: {
@@ -46,6 +48,7 @@ export type Database = {
           min_lat?: number
           min_lng?: number
           name?: string
+          orientation?: Database["public"]["Enums"]["orientation"]
           width?: number
         }
         Relationships: []
@@ -128,7 +131,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      orientation: "NS" | "EW"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -255,6 +258,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      orientation: ["NS", "EW"],
+    },
   },
 } as const

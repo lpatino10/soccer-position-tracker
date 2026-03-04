@@ -141,9 +141,14 @@ def generate_metadata(params: MetadataParams):
     )
 
 def get_normalized_coordinates(field: SoccerField, lng_diff, lat_diff, tracking_event: TrackingEvent):
-  norm_x = (tracking_event.lng - field.min_lng) / lng_diff
-  norm_y = (tracking_event.lat - field.min_lat) / lat_diff
-  return (norm_x, norm_y)
+  if field.orientation == "EW":
+    norm_x = (tracking_event.lng - field.min_lng) / lng_diff
+    norm_y = (tracking_event.lat - field.min_lat) / lat_diff
+    return (norm_x, norm_y)
+  elif field.orientation == "NS":
+    norm_x = (tracking_event.lat - field.min_lat) / lat_diff
+    norm_y = 1 - ((tracking_event.lng - field.min_lng) / lng_diff)
+    return (norm_x, norm_y)
 
 def generate_tracking_event_data(params: TrackingEventFileParams):
   lng_diff = params.field.max_lng - params.field.min_lng
