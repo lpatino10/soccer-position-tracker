@@ -13,10 +13,30 @@
       <div class="penalty-area"></div>
     </div>
     <div class="center-circle"></div>
-    {#await data.data then data}
-      <Player gameData={data} />
+    {#await data.positions then positionData}
+      <Player {positionData} />
     {/await}
   </section>
+  {#if data.game}
+    <div class="flex flex-col gap-2">
+      {#if data.field}
+        <p>{data.field.name}</p>
+      {/if}
+      <div class="flex gap-2 items-center">
+        {#if data.game.my_team_score !== null && data.game.opponent_score !== null}
+          {#if data.game.my_team_score > data.game.opponent_score}
+            <span class="font-bold text-green-700">W</span>
+          {:else if data.game.my_team_score < data.game.opponent_score}
+            <span class="font-bold text-red-700">L</span>
+          {:else}
+            <span class="font-bold">D</span>
+          {/if}
+        {/if}
+        {data.game.my_team_score} - {data.game.opponent_score}
+      </div>
+      <p>{data.game.position}</p>
+    </div>
+  {/if}
 </div>
 
 <style>

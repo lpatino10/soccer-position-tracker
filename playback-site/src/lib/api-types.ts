@@ -3,4 +3,4 @@ export interface PositionEvent {
   y: number
 }
 
-export type GameData = PositionEvent[]
+export type PositionData = PositionEvent[]

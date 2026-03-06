@@ -1,20 +1,20 @@
 <script lang="ts">
-  import type { GameData } from "$lib/api-types";
+  import type { PositionData } from "$lib/api-types";
 
-  const { gameData }: { gameData: GameData } = $props();
+  const { positionData }: { positionData: PositionData } = $props();
   let dataIndex = $state(0);
 
   let playerElement: HTMLDivElement;
 
   $effect(() => {
     setInterval(() => {
-      const position = gameData[dataIndex];
+      const position = positionData[dataIndex];
 
       playerElement.style.left = `${position.x * 590}px`;
       playerElement.style.top = `${position.y * 380}px`;
 
       dataIndex += 1;
-      if (dataIndex >= gameData.length) {
+      if (dataIndex >= positionData.length) {
         dataIndex = 0;
       }
     }, 100);
