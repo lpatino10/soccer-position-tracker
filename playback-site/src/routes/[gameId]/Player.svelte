@@ -10,8 +10,9 @@
     setInterval(() => {
       const position = positionData[dataIndex];
 
-      playerElement.style.left = `${position.x * 590}px`;
-      playerElement.style.top = `${position.y * 380}px`;
+      // 20px border outside field boundaries, so we need to account for that.
+      playerElement.style.left = `${position.x * 550 + 20}px`;
+      playerElement.style.top = `${position.y * 340 + 20}px`;
 
       dataIndex += 1;
       if (dataIndex >= positionData.length) {
