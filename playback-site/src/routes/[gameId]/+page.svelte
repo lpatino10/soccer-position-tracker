@@ -13,7 +13,15 @@
       <div class="penalty-area"></div>
     </div>
     <div class="center-circle"></div>
-    {#await data.positions then positionData}
+    {#await data.positions}
+      <div
+        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-700 flex items-center justify-center p-1 rounded-md"
+      >
+        <span class="font-semibold text-gray-200 animate-pulse">
+          Loading playback...
+        </span>
+      </div>
+    {:then positionData}
       <Player {positionData} />
     {/await}
   </section>
