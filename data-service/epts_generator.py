@@ -29,6 +29,33 @@ def generate_metadata(params: MetadataParams):
 
   file_date = ET.SubElement(global_config, "FileDate")
   file_date.text = datetime.now().isoformat()
+  provider_name = ET.SubElement(global_config, "ProviderName")
+  provider_name.text = "lopa inc."
+  frame_rate = ET.SubElement(global_config, "FrameRate")
+  frame_rate.text = "120"
+  provider_params = ET.SubElement(global_config, "ProviderGlobalParameters")
+  first_half_start_param = ET.SubElement(provider_params, "ProviderParameter")
+  first_half_start_name = ET.SubElement(first_half_start_param, "Name")
+  first_half_start_name.text = "first_half_start"
+  first_half_start_value = ET.SubElement(first_half_start_param, "Value")
+  first_half_start_value.text = "1"
+  first_half_end_param = ET.SubElement(provider_params, "ProviderParameter")
+  first_half_end_name = ET.SubElement(first_half_end_param, "Name")
+  first_half_end_name.text = "first_half_end"
+  first_half_end_value = ET.SubElement(first_half_end_param, "Value")
+  # TODO: Figure out a way to specify the actual split between halves.
+  first_half_end_value.text = f"{params.frame_count - 2}"
+  second_half_start_param = ET.SubElement(provider_params, "ProviderParameter")
+  second_half_start_name = ET.SubElement(second_half_start_param, "Name")
+  second_half_start_name.text = "second_half_start"
+  second_half_start_value = ET.SubElement(second_half_start_param, "Value")
+  second_half_start_value.text = f"{params.frame_count - 1}"
+  second_half_end_param = ET.SubElement(provider_params, "ProviderParameter")
+  second_half_end_name = ET.SubElement(second_half_end_param, "Name")
+  second_half_end_name.text = "second_half_end"
+  second_half_end_value = ET.SubElement(second_half_end_param, "Value")
+  second_half_end_value.text = f"{params.frame_count}"
+
 
   sessions = ET.SubElement(metadata, "Sessions")
   session = ET.SubElement(sessions, "Session", { "id": "session_1" })
@@ -50,15 +77,32 @@ def generate_metadata(params: MetadataParams):
   visiting_team_score.text = f"{params.opponent_score}"
 
   field_size = ET.SubElement(session, "FieldSize")
-  length = ET.SubElement(field_size, "Length")
-  length.text = f"{params.field_length}"
+  # Weird that this isn't Length, but that's what the Metrica adaptor expects.
+  height = ET.SubElement(field_size, "Height")
+  height.text = f"{params.field_length}"
   width = ET.SubElement(field_size, "Width")
   width.text = f"{params.field_width}"
 
   teams = ET.SubElement(metadata, "Teams")
-  team = ET.SubElement(teams, "Team", { "id": "my_team" })
-  team_name = ET.SubElement(team, "Name")
+  my_team = ET.SubElement(teams, "Team", { "id": "my_team" })
+  team_name = ET.SubElement(my_team, "Name")
   team_name.text = "My Team"
+  # TODO: Make attacking direction dynamic.
+  my_team_provider_params = ET.SubElement(my_team, "ProviderTeamsParameters")
+  my_team_provider_param = ET.SubElement(my_team_provider_params, "ProviderParameter")
+  my_team_provider_param_name = ET.SubElement(my_team_provider_param, "Name")
+  my_team_provider_param_name.text = "attack_direction_first_half"
+  my_team_provider_param_value = ET.SubElement(my_team_provider_param, "Value")
+  my_team_provider_param_value.text = "right_to_left"
+  opponent = ET.SubElement(teams, "Team", { "id": "opponent" })
+  opponent_team_name = ET.SubElement(opponent, "Name")
+  opponent_team_name.text = "Opponent"
+  opponent_provider_params = ET.SubElement(opponent, "ProviderTeamsParameters")
+  opponent_provider_param = ET.SubElement(opponent_provider_params, "ProviderParameter")
+  opponent_provider_param_name = ET.SubElement(opponent_provider_param, "Name")
+  opponent_provider_param_name.text = "attack_direction_first_half"
+  opponent_provider_param_value = ET.SubElement(opponent_provider_param, "Value")
+  opponent_provider_param_value.text = "left_to_right"
 
   players = ET.SubElement(metadata, "Players")
   player = ET.SubElement(players, "Player", {
@@ -67,6 +111,8 @@ def generate_metadata(params: MetadataParams):
   })
   player_name = ET.SubElement(player, "Name")
   player_name.text = "Logan"
+  shirt_number = ET.SubElement(player, "ShirtNumber")
+  shirt_number.text = "10"
 
   devices = ET.SubElement(metadata, "Devices")
   device = ET.SubElement(devices, "Device", { "id": "device_1" })
@@ -77,13 +123,13 @@ def generate_metadata(params: MetadataParams):
   sensor_name = ET.SubElement(sensor, "Name")
   sensor_name.text = "Position"
   channels = ET.SubElement(sensor, "Channels")
-  channel_x = ET.SubElement(channels, "Channel", { "id": "channel_x" })
+  channel_x = ET.SubElement(channels, "Channel", { "id": "x" })
   channel_x_name = ET.SubElement(channel_x, "Name")
   channel_x_name.text = "position_x"
   channel_x_unit = ET.SubElement(channel_x, "Unit")
   # TODO: Update unit?
   channel_x_unit.text = "normalized"
-  channel_y = ET.SubElement(channels, "Channel", { "id": "channel_y" })
+  channel_y = ET.SubElement(channels, "Channel", { "id": "y" })
   channel_y_name = ET.SubElement(channel_y, "Name")
   channel_y_name.text = "position_y"
   channel_y_unit = ET.SubElement(channel_y, "Unit")
@@ -92,12 +138,12 @@ def generate_metadata(params: MetadataParams):
 
   player_channels = ET.SubElement(metadata, "PlayerChannels")
   ET.SubElement(player_channels, "PlayerChannel", {
-    "channelId": "channel_x",
+    "channelId": "x",
     "id": "me_x",
     "playerId": "me"
   })
   ET.SubElement(player_channels, "PlayerChannel", {
-    "channelId": "channel_y",
+    "channelId": "y",
     "id": "me_y",
     "playerId": "me"
   })
@@ -111,14 +157,23 @@ def generate_metadata(params: MetadataParams):
   ET.SubElement(data_format_specification, "StringRegister", {
     "name": "frameCount"
   })
-  position_split = ET.SubElement(data_format_specification, "SplitRegister", {
+  player_section_split = ET.SubElement(data_format_specification, "SplitRegister", {
     "separator": ","
   })
-  ET.SubElement(position_split, "PlayerChannelRef", {
+  ET.SubElement(player_section_split, "PlayerChannelRef", {
     "playerChannelId": "me_x"
   })
-  ET.SubElement(position_split, "PlayerChannelRef", {
+  ET.SubElement(player_section_split, "PlayerChannelRef", {
     "playerChannelId": "me_y"
+  })
+  ball_section_split = ET.SubElement(data_format_specification, "SplitRegister", {
+    "separator": ","
+  })
+  ET.SubElement(ball_section_split, "BallChannelRef", {
+    "channelId": "x"
+  })
+  ET.SubElement(ball_section_split, "BallChannelRef", {
+    "channelId": "y"
   })
 
   # Output
@@ -159,7 +214,7 @@ def generate_tracking_event_data(params: TrackingEventFileParams):
   with open(temp_file_path, "w") as f:
     for index, event in enumerate(params.tracking_events):
       coords = get_normalized_coordinates(params.field, lng_diff, lat_diff, event)
-      f.write(f"{index + 1}:{coords[0]},{coords[1]}" + "\n")
+      f.write(f"{index + 1}:{coords[0]},{coords[1]}:0,0" + "\n")
 
   supabase_file_path = f"{params.game_id}/tracking.txt"
   with open(temp_file_path, "rb") as f:
