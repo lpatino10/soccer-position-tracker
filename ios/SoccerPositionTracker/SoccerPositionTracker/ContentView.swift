@@ -27,8 +27,6 @@ struct ContentView: View {
                 Text("New Game")
                     .font(.title)
                 
-                TextField("Position", text: $position)
-                
                 if selectedFieldId != nil {
                     LabeledContent {
                         Picker("Field", selection: $selectedFieldId) {
@@ -48,29 +46,45 @@ struct ContentView: View {
                     Task {
                         try? await MySupabaseClient.shared.createNewGame(
                             id: newGameId,
-                            position: position,
                             fieldId: selectedFieldId!
                         )
                     }
                     isGameStarted = true
                 }
-                .disabled(position.isEmpty || selectedFieldId == nil)
+                .disabled(selectedFieldId == nil)
                 .buttonStyle(.glassProminent)
             }
             .padding()
             .navigationDestination(isPresented: $isGameFinished) {
                 VStack {
-                    Text("Final Score")
-                        .font(.title)
-                    
                     HStack {
-                        Text("My Team")
-                        Stepper("\(myTeamScore)", value: $myTeamScore)
+                        Text("Final Score")
+                            .font(.title3)
+                        Spacer()
                     }
                     
                     HStack {
-                        Text("Opponent")
+                        Text("My Team:")
+                            .font(.callout)
+                        Stepper("\(myTeamScore)", value: $myTeamScore)
+                            .font(.headline)
+                    }
+                    
+                    HStack {
+                        Text("Opponent:")
+                            .font(.callout)
                         Stepper("\(opponentScore)", value: $opponentScore)
+                            .font(.headline)
+                    }
+                    
+                    Divider().padding(EdgeInsets(top: 12, leading: 0, bottom: 12, trailing: 0))
+                    
+                    LabeledContent {
+                        TextField("Center mid", text: $position)
+                            .multilineTextAlignment(.trailing)
+                    } label: {
+                        Text("Position")
+                            .font(.title3)
                     }
                     
                     Spacer()
@@ -79,8 +93,9 @@ struct ContentView: View {
                         Task {
                             print(newGameId)
 
-                            try? await MySupabaseClient.shared.updateGameScore(
+                            try? await MySupabaseClient.shared.updateGame(
                                 id: newGameId,
+                                position: position,
                                 myTeamScore: myTeamScore,
                                 opponentScore: opponentScore
                             )
@@ -93,6 +108,7 @@ struct ContentView: View {
                         position = ""
                         path = NavigationPath()
                     }
+                    .disabled(position.isEmpty)
                     .buttonStyle(.glassProminent)
                 }
                 .padding()

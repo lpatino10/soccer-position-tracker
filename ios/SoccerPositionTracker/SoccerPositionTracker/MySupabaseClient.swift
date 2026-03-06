@@ -30,17 +30,17 @@ final class MySupabaseClient {
         return fields
     }
     
-    func createNewGame(id: UUID, position: String, fieldId: Int) async throws {
+    func createNewGame(id: UUID, fieldId: Int) async throws {
         try await client
             .from("Game")
-            .insert(Game(id: id, position: position, my_team_score: nil, opponent_score: nil, field_id: fieldId))
+            .insert(Game(id: id, position: "", my_team_score: nil, opponent_score: nil, field_id: fieldId))
             .execute()
     }
     
-    func updateGameScore(id: UUID, myTeamScore: Int, opponentScore: Int) async throws {
+    func updateGame(id: UUID, position: String, myTeamScore: Int, opponentScore: Int) async throws {
         try await client
             .from("Game")
-            .update(["my_team_score": myTeamScore, "opponent_score": opponentScore])
+            .update(UpdateGame(position: position, my_team_score: myTeamScore, opponent_score: opponentScore))
             .eq("id", value: id.uuidString.lowercased())
             .execute()
     }

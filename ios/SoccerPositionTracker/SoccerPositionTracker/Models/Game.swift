@@ -14,3 +14,9 @@ struct Game: Codable {
     let opponent_score: Int?
     let field_id: Int
 }
+
+struct UpdateGame: Encodable {
+    let position: String
+    let my_team_score: Int
+    let opponent_score: Int
+}
