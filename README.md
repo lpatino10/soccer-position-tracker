@@ -13,5 +13,5 @@ The goal is to build something that will:
 ### TODO:
 ✅ Generate valid EPTS metadata
 ✅ Successfully collect and store position data during games
-- Convert position data into valid EPTS tracking data matching schema defined in metadata
+✅ Convert position data into valid EPTS tracking data matching schema defined in metadata
 - Build interface to play back tracked games
