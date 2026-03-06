@@ -1,10 +1,5 @@
-import { supabase } from "$lib/supabase-client";
+import apiClient from '$lib/api-client.js';
 
 export const load = async ({ params }) => {
-  const { data } = await supabase
-    .from('TrackingEvent')
-    .select()
-    .eq('game_id', params.gameId);
-
-  return { data };
+  return { data: apiClient.getGameData(params.gameId) };
 };
