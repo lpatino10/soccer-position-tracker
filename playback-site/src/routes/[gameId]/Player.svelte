@@ -7,7 +7,7 @@
   let playerElement: HTMLDivElement;
 
   $effect(() => {
-    setInterval(() => {
+    const interval = setInterval(() => {
       const position = positionData[dataIndex];
 
       // 20px border outside field boundaries, so we need to account for that.
@@ -19,6 +19,10 @@
         dataIndex = 0;
       }
     }, 100);
+
+    return () => {
+      clearInterval(interval);
+    };
   });
 </script>
 

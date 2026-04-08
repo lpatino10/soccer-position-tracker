@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: light-dark(#006B5A, #00D4B4);
+  --color-primary-50: light-dark(#00201A, #00201A);
+  --color-primary-100: light-dark(#00382E, #00382E);
+  --color-primary-200: light-dark(#154F44, #005143);
+  --color-primary-300: light-dark(#31685B, #006B5A);
+  --color-primary-400: light-dark(#4B8173, #008772);
+  --color-primary-500: light-dark(#659B8D, #00A38A);
+  --color-primary-600: light-dark(#7FB6A7, #00C1A4);
+  --color-primary-700: light-dark(#9AD2C2, #27DFBE);
+  --color-primary-800: light-dark(#B5EEDE, #55FCDA);
+  --color-primary-900: light-dark(#C3FDEC, #B7FFEB);
+
+  --color-secondary: light-dark(#00D4B4, #004D40);
+  --color-secondary-50: light-dark(#00201A, #00201A);
+  --color-secondary-100: light-dark(#00382E, #00382E);
+  --color-secondary-200: light-dark(#005143, #065043);
+  --color-secondary-300: light-dark(#006B5A, #29695B);
+  --color-secondary-400: light-dark(#008772, #448273);
+  --color-secondary-500: light-dark(#00A38A, #5E9C8C);
+  --color-secondary-600: light-dark(#00C1A4, #79B7A6);
+  --color-secondary-700: light-dark(#27DFBE, #94D3C1);
+  --color-secondary-800: light-dark(#55FCDA, #AFEFDD);
+  --color-secondary-900: light-dark(#B7FFEB, #BDFEEB);
+
+  --color-tertiary: light-dark(#FFA957, #ADFF00);
+  --color-tertiary-50: light-dark(#2E1500, #121F00);
+  --color-tertiary-100: light-dark(#4C2700, #223600);
+  --color-tertiary-200: light-dark(#6C3A00, #334F00);
+  --color-tertiary-300: light-dark(#8E4F00, #456800);
+  --color-tertiary-400: light-dark(#AD6618, #578400);
+  --color-tertiary-500: light-dark(#CC7F30, #6BA000);
+  --color-tertiary-600: light-dark(#EB9848, #7FBD00);
+  --color-tertiary-700: light-dark(#FFB877, #94DB00);
+  --color-tertiary-800: light-dark(#FFDCC1, #A9F900);
+  --color-tertiary-900: light-dark(#FFEEE2, #D4FF93);
+
+  --color-neutral: light-dark(#F9F7E8, #080C0B);
+  --color-headline: light-dark(#1C1C13, #FAFDFA);
+  --color-body: light-dark(#3B4A45, #A8ACAA);
+}
+
+:root {
+  color-scheme: light;
+  font-family: 'Space Grotesk';
+}
+
+:root.dark {
+  color-scheme: dark;
+}

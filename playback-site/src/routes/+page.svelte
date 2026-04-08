@@ -2,7 +2,7 @@
   const { data } = $props();
 </script>
 
-<h1 class="text-3xl pb-3">Games</h1>
+<h1 class="text-headline text-3xl pb-3">Games</h1>
 <ul>
   {#each data.data as { created_at, id, position, my_team_score, opponent_score }}
     <a href="/{id}">
