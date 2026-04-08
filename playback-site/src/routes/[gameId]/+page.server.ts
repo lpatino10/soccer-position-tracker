@@ -1,7 +1,13 @@
 import apiClient from '$lib/api-client.js';
-import { supabase } from '$lib/supabase-client.js';
+import { createClient } from '@supabase/supabase-js';
+import type { Database } from '$lib/database.types';
+import mockGames from "$lib/mock-data/games.json";
 
-const fetchGameData = async (gameId: string) => {
+const fetchGameData = async (supabase: ReturnType<typeof createClient<Database>>, gameId: string) => {
+  if (import.meta.env.VITE_USE_MOCK_DATA === 'true') {
+    return mockGames[0];
+  }
+
   const gameData = await supabase.from('Game').select().eq('id', gameId);
 
   let parsedData = null;
@@ -12,7 +18,7 @@ const fetchGameData = async (gameId: string) => {
   return parsedData;
 }
 
-const fetchFieldData = async (fieldId: number) => {
+const fetchFieldData = async (supabase: ReturnType<typeof createClient<Database>>, fieldId: number) => {
   const fieldData = await supabase.from('Field').select().eq('id', fieldId);
 
   let parsedData = null;
@@ -24,11 +30,12 @@ const fetchFieldData = async (fieldId: number) => {
 }
 
 export const load = async ({ params }) => {
-  const gameData = await fetchGameData(params.gameId);
+  const supabase = createClient<Database>(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_KEY);
+  const gameData = await fetchGameData(supabase, params.gameId);
 
   let fieldData = null;
   if (gameData && gameData.field_id) {
-    fieldData = await fetchFieldData(gameData.field_id)
+    fieldData = await fetchFieldData(supabase, gameData.field_id)
   }
 
   return {
