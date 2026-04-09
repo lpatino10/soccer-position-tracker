@@ -12,8 +12,10 @@
 	<div
 		class="border-b border-neutral-200 flex items-center justify-between px-4 py-3"
 	>
-		<h1 class="font-semibold text-primary text-3xl">MATCH_REPLAY</h1>
+		<h2 class="font-semibold text-primary text-3xl">MATCH_REPLAY</h2>
 		<ThemeToggle />
 	</div>
-	{@render children()}
+	<div class="p-4 size-full">
+		{@render children()}
+	</div>
 </div>
