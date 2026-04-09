@@ -66,7 +66,7 @@
           </h3>
           {@render resultBadge(result)}
         </div>
-        <h3 class="text-2xl">GREEN LAKE MARAUDERS</h3>
+        <h3 class="text-2xl">OPPONENT</h3>
       </div>
 
       <a
