@@ -47,7 +47,7 @@
 {/snippet}
 
 <button
-  on:click={toggleTheme}
+  onclick={toggleTheme}
   class="bg-primary cursor-pointer p-1.5"
   aria-label="Theme picker"
 >

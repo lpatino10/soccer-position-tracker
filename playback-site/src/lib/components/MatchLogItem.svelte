@@ -46,11 +46,13 @@
 {/snippet}
 
 <li>
-  <div class="group flex relative w-full">
-    <div class="bg-neutral-400 h-full w-1"></div>
-    <div
-      class="absolute h-full w-1 bg-primary transition-all duration-300 scale-0 origin-top group-hover:scale-100"
-    ></div>
+  <div class="group flex py-2 w-full">
+    <div class="relative w-1 shrink-0">
+      <div class="absolute inset-0 bg-neutral-400"></div>
+      <div
+        class="absolute inset-0 bg-primary transition-[clip-path] duration-300 [clip-path:inset(0_0_100%_0)] group-hover:[clip-path:inset(0_0_0_0)]"
+      ></div>
+    </div>
 
     <div class="flex items-center justify-between px-3 py-4 w-full">
       <div class="flex flex-col">

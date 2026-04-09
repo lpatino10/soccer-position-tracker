@@ -9,7 +9,7 @@
   const { matchLogData }: Props = $props();
 </script>
 
-<ul class="size-full divide-y divide-neutral-200 dark:divide-neutral-500">
+<ol class="size-full divide-y divide-neutral-200 dark:divide-neutral-500">
   {#each matchLogData.data as { created_at, id, field_id, position, my_team_score, opponent_score }}
     <MatchLogItem
       {created_at}
@@ -20,4 +20,4 @@
       opponent_score={opponent_score || 0}
     />
   {/each}
-</ul>
+</ol>
