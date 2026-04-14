@@ -25,7 +25,7 @@
 		<p class="text-body text-sm">{`VER: ${version}`}</p>
 	</div>
 	<div
-		class="absolute rotate-90 right-0 bottom-0 origin-top-right -translate-x-1 text-body/25"
+		class="absolute rotate-90 right-0 bottom-0 origin-top-right -translate-x-1 text-body/25 whitespace-nowrap"
 	>
 		STATUS: ONLINE // LOGS: VERIFIED // POSITIONAL_DATA: SYNCED
 	</div>

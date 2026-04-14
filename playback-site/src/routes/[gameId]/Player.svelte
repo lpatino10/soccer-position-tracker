@@ -1,7 +1,15 @@
 <script lang="ts">
   import type { PositionData } from "$lib/api-types";
 
-  const { positionData }: { positionData: PositionData } = $props();
+  const {
+    fieldContainerHeight,
+    fieldContainerWidth,
+    positionData,
+  }: {
+    fieldContainerHeight: number;
+    fieldContainerWidth: number;
+    positionData: PositionData;
+  } = $props();
   let dataIndex = $state(0);
 
   let playerElement: HTMLDivElement;
@@ -10,9 +18,9 @@
     const interval = setInterval(() => {
       const position = positionData[dataIndex];
 
-      // 20px border outside field boundaries, so we need to account for that.
-      playerElement.style.left = `${position.x * 550 + 20}px`;
-      playerElement.style.top = `${position.y * 340 + 20}px`;
+      // Subtract 4px to center dot.
+      playerElement.style.left = `${position.x * fieldContainerWidth - 4}px`;
+      playerElement.style.top = `${position.y * fieldContainerHeight - 4}px`;
 
       dataIndex += 1;
       if (dataIndex >= positionData.length) {
@@ -28,5 +36,5 @@
 
 <div
   bind:this={playerElement}
-  class="absolute transition-all bg-yellow-300 size-2 rounded-full"
+  class="absolute transition-all bg-tertiary size-2 rounded-full"
 ></div>

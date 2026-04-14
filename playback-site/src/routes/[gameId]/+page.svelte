@@ -2,28 +2,81 @@
   import Player from "./Player.svelte";
 
   const { data } = $props();
+
+  let fieldContainerHeight = $state<number>(0);
+  let fieldContainerWidth = $state<number>(0);
 </script>
 
-<div class="page-container">
-  <section class="pitch">
-    <div class="field left">
-      <div class="penalty-area"></div>
-    </div>
-    <div class="field right">
-      <div class="penalty-area"></div>
-    </div>
-    <div class="center-circle"></div>
-    {#await data.positions}
+<div class="flex justify-center size-full">
+  <section class="flex justify-center p-4 w-full">
+    <div
+      bind:clientHeight={fieldContainerHeight}
+      bind:clientWidth={fieldContainerWidth}
+      class="flex relative border border-primary aspect-110/70 h-fit w-full max-w-200 overflow-hidden after:content-[''] after:bg-primary after:h-full after:w-px after:absolute after:left-1/2 after:-translate-x-1/2"
+    >
+      <!-- Left penalty box -->
       <div
-        class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-700 flex items-center justify-center p-1 rounded-md"
+        class="absolute h-[63%] w-[16.4%] border border-l-0 border-primary top-[18.5%] z-10 bg-neutral"
+      ></div>
+      <div
+        class="absolute h-[29%] w-[5.5%] border border-l-0 border-primary top-[35.5%] z-10"
+      ></div>
+      <div
+        class="absolute bg-primary size-1 rounded-full top-1/2 left-[11%] -translate-1/2 z-10 md:size-1.5"
+      ></div>
+      <div
+        class="absolute top-1/2 left-[11%] -translate-1/2 h-2/7 aspect-square border border-primary rounded-full"
+      ></div>
+
+      <!-- Center circle -->
+      <div
+        class="relative h-2/7 aspect-square border border-primary rounded-full left-1/2 top-1/2 -translate-1/2"
       >
-        <span class="font-semibold text-gray-200 animate-pulse">
-          Loading playback...
-        </span>
+        <div
+          class="absolute bg-primary size-1 rounded-full left-1/2 top-1/2 -translate-1/2 md:size-1.5"
+        ></div>
       </div>
-    {:then positionData}
-      <Player {positionData} />
-    {/await}
+
+      <!-- Right penalty box -->
+      <div
+        class="absolute h-[63%] w-[16.4%] border border-r-0 border-primary top-[18.5%] right-0 z-10 bg-neutral"
+      ></div>
+      <div
+        class="absolute h-[29%] w-[5.5%] border border-r-0 border-primary top-[35.5%] right-0 z-10"
+      ></div>
+      <div
+        class="absolute bg-primary size-1 rounded-full top-1/2 right-[11%] translate-x-1/2 -translate-y-1/2 z-10 md:size-1.5"
+      ></div>
+      <div
+        class="absolute top-1/2 right-[11%] translate-x-1/2 -translate-y-1/2 h-2/7 aspect-square border border-primary rounded-full"
+      ></div>
+
+      <!-- Corners -->
+      <div
+        class="absolute top-0 left-0 h-3 aspect-square rounded-full border border-primary -translate-1/2 md:h-4"
+      ></div>
+      <div
+        class="absolute top-0 right-0 h-3 aspect-square rounded-full border border-primary translate-x-1/2 -translate-y-1/2 md:h-4"
+      ></div>
+      <div
+        class="absolute bottom-0 left-0 h-3 aspect-square rounded-full border border-primary -translate-x-1/2 translate-y-1/2 md:h-4"
+      ></div>
+      <div
+        class="absolute bottom-0 right-0 h-3 aspect-square rounded-full border border-primary translate-1/2 md:h-4"
+      ></div>
+
+      {#await data.positions}
+        <div
+          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-700 flex items-center justify-center p-1 rounded-md"
+        >
+          <span class="font-semibold text-gray-200 animate-pulse">
+            Loading playback...
+          </span>
+        </div>
+      {:then positionData}
+        <Player {fieldContainerHeight} {fieldContainerWidth} {positionData} />
+      {/await}
+    </div>
   </section>
   {#if data.game}
     <div class="flex flex-col gap-2">
@@ -46,106 +99,3 @@
     </div>
   {/if}
 </div>
-
-<style>
-  .page-container {
-    display: flex;
-  }
-
-  .pitch {
-    background-color: #238729;
-    width: 590px;
-    height: 380px;
-    position: relative;
-  }
-  .pitch:after {
-    content: "";
-    border-left: 1px solid white;
-    position: absolute;
-    top: 20px;
-    left: 295px;
-    display: block;
-    height: 340px;
-  }
-
-  .pitch:before {
-    content: "";
-    border: 1px solid white;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    display: block;
-    width: 550px;
-    height: 340px;
-  }
-
-  .center-circle {
-    position: absolute;
-    top: 145px;
-    left: 250px;
-    width: 90px;
-    height: 90px;
-    border: 1px solid white;
-    border-radius: 50%;
-  }
-  .center-circle:after {
-    position: absolute;
-    top: 43px;
-    left: 43px;
-    width: 1px;
-    height: 1px;
-    background-color: white;
-    content: "";
-    border: 1px solid white;
-  }
-
-  .penalty-area {
-    position: absolute;
-    height: 140px;
-    width: 80px;
-    top: 120px;
-    border: 1px solid white;
-  }
-
-  .left .penalty-area {
-    left: 20px;
-    border-left: 0;
-  }
-
-  .right .penalty-area {
-    right: 19px;
-    border-right: 0;
-  }
-
-  .penalty-area:before {
-    position: absolute;
-    height: 70px;
-    width: 35px;
-    top: 35px;
-    border: 1px solid white;
-    content: "";
-  }
-  .left .penalty-area:before {
-    left: 0px;
-    border-left: 0;
-  }
-  .right .penalty-area:before {
-    right: 0px;
-    border-right: 0;
-  }
-
-  .penalty-area:after {
-    position: absolute;
-    height: 2px;
-    width: 2px;
-    top: 70px;
-    background-color: white;
-    content: "";
-  }
-  .left .penalty-area:after {
-    right: 15px;
-  }
-  .right .penalty-area:after {
-    left: 15px;
-  }
-</style>
