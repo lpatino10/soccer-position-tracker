@@ -9,7 +9,7 @@
 
 <div class="flex justify-center size-full">
   <section
-    class="relative flex h-fit justify-center p-8 shadow-xl w-full max-w-200"
+    class="relative flex h-fit justify-center p-8 shadow-xl dark:shadow-lg dark:shadow-neutral-900 w-full max-w-200"
   >
     <!-- Match info -->
     {#if data.game}
@@ -75,7 +75,7 @@
         class="absolute h-[29%] w-[5.5%] border border-l-0 border-primary top-[35.5%] z-10"
       ></div>
       <div
-        class="absolute bg-primary size-1 rounded-full top-1/2 left-[11%] -translate-1/2 z-10 md:size-1.5"
+        class="absolute bg-primary size-1 rounded-full top-1/2 left-[11%] -translate-1/2 z-10"
       ></div>
       <div
         class="absolute top-1/2 left-[11%] -translate-1/2 h-2/7 aspect-square border border-primary rounded-full"
@@ -86,7 +86,7 @@
         class="relative h-2/7 aspect-square border border-primary rounded-full left-1/2 top-1/2 -translate-1/2"
       >
         <div
-          class="absolute bg-primary size-1 rounded-full left-1/2 top-1/2 -translate-1/2 md:size-1.5"
+          class="absolute bg-primary size-1 rounded-full left-1/2 top-1/2 -translate-1/2"
         ></div>
       </div>
 
@@ -98,7 +98,7 @@
         class="absolute h-[29%] w-[5.5%] border border-r-0 border-primary top-[35.5%] right-0 z-10"
       ></div>
       <div
-        class="absolute bg-primary size-1 rounded-full top-1/2 right-[11%] translate-x-1/2 -translate-y-1/2 z-10 md:size-1.5"
+        class="absolute bg-primary size-1 rounded-full top-1/2 right-[11%] translate-x-1/2 -translate-y-1/2 z-10"
       ></div>
       <div
         class="absolute top-1/2 right-[11%] translate-x-1/2 -translate-y-1/2 h-2/7 aspect-square border border-primary rounded-full"
