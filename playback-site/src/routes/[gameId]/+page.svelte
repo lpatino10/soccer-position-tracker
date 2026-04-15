@@ -8,11 +8,64 @@
 </script>
 
 <div class="flex justify-center size-full">
-  <section class="flex justify-center p-4 w-full">
+  <section
+    class="relative flex h-fit justify-center p-8 shadow-xl w-full max-w-200"
+  >
+    <!-- Match info -->
+    {#if data.game}
+      {#if data.field}
+        <div class="absolute top-4 left-4 flex flex-col">
+          <p class="text-xs text-primary">MATCH_LOCATION</p>
+          <h3 class="text-2xl text-primary font-semibold uppercase">
+            {data.field.name.split(" ").join("_")}
+          </h3>
+          <div class="flex gap-2 items-center">
+            <div
+              class="flex bg-secondary items-center justify-center p-0.5 w-fit"
+            >
+              <p class="text-[10px] text-primary">
+                {#if data.field.orientation === "EW"}
+                  &lt;&gt; EW
+                {:else}
+                  ^&#8964; NS
+                {/if}
+              </p>
+            </div>
+            <p class="text-[10px] text-primary opacity-70">
+              {`LAT: ${data.field.min_lat}° N // LNG: ${data.field.min_lng}° E`}
+            </p>
+          </div>
+        </div>
+        <div class="absolute top-4 right-4 flex flex-col text-end">
+          <div class="flex gap-2 items-center justify-end">
+            <p class="text-xs text-primary">
+              {`${data.game.my_team_score} - ${data.game.opponent_score}`}
+            </p>
+            <span class="text-xs text-primary">//</span>
+            <p class="text-xs text-primary">
+              {#if data.game.my_team_score !== null && data.game.opponent_score !== null}
+                {#if data.game.my_team_score > data.game.opponent_score}
+                  WIN
+                {:else if data.game.my_team_score < data.game.opponent_score}
+                  LOSS
+                {:else}
+                  DRAW
+                {/if}
+              {/if}
+            </p>
+          </div>
+          <h4 class="text-md text-primary font-semibold uppercase">
+            {data.game.position?.split(" ").join("_")}
+          </h4>
+          <p class="text-xs text-primary">{data.game.created_at}</p>
+        </div>
+      {/if}
+    {/if}
+
     <div
       bind:clientHeight={fieldContainerHeight}
       bind:clientWidth={fieldContainerWidth}
-      class="flex relative border border-primary aspect-110/70 h-fit w-full max-w-200 overflow-hidden after:content-[''] after:bg-primary after:h-full after:w-px after:absolute after:left-1/2 after:-translate-x-1/2"
+      class="flex relative border border-primary aspect-110/70 h-fit w-full overflow-hidden after:content-[''] after:bg-primary after:h-full after:w-px after:absolute after:left-1/2 after:-translate-x-1/2"
     >
       <!-- Left penalty box -->
       <div
@@ -66,36 +119,14 @@
       ></div>
 
       {#await data.positions}
-        <div
-          class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-700 flex items-center justify-center p-1 rounded-md"
+        <span
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-tertiary-500 text-2xl animate-pulse"
         >
-          <span class="font-semibold text-gray-200 animate-pulse">
-            Loading playback...
-          </span>
-        </div>
+          PLAYBACK_LOADING
+        </span>
       {:then positionData}
         <Player {fieldContainerHeight} {fieldContainerWidth} {positionData} />
       {/await}
     </div>
   </section>
-  {#if data.game}
-    <div class="flex flex-col gap-2">
-      {#if data.field}
-        <p>{data.field.name}</p>
-      {/if}
-      <div class="flex gap-2 items-center">
-        {#if data.game.my_team_score !== null && data.game.opponent_score !== null}
-          {#if data.game.my_team_score > data.game.opponent_score}
-            <span class="font-bold text-green-700">W</span>
-          {:else if data.game.my_team_score < data.game.opponent_score}
-            <span class="font-bold text-red-700">L</span>
-          {:else}
-            <span class="font-bold">D</span>
-          {/if}
-        {/if}
-        {data.game.my_team_score} - {data.game.opponent_score}
-      </div>
-      <p>{data.game.position}</p>
-    </div>
-  {/if}
 </div>
