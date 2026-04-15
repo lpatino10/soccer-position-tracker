@@ -1,5 +1,5 @@
 import mockTrackingEvents from "$lib/mock-data/tracking-events.json";
-import type { PositionData } from "./api-types";
+import type { PositionData } from "./types/api-types";
 
 const API_BASE = 'https://soccer-position-tracker.onrender.com';
 

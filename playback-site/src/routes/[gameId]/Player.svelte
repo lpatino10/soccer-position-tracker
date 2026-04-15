@@ -1,18 +1,24 @@
 <script lang="ts">
-  import type { PositionData } from "$lib/api-types";
+  import type { PositionData } from "$lib/types/api-types";
 
   const {
     fieldContainerHeight,
     fieldContainerWidth,
     positionData,
+    onMount,
   }: {
     fieldContainerHeight: number;
     fieldContainerWidth: number;
     positionData: PositionData;
+    onMount?: (el: HTMLDivElement) => void;
   } = $props();
   let dataIndex = $state(0);
 
   let playerElement: HTMLDivElement;
+
+  $effect(() => {
+    if (playerElement) onMount?.(playerElement);
+  });
 
   $effect(() => {
     const interval = setInterval(() => {

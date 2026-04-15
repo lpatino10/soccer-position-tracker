@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import type { Database } from '$lib/database.types';
+import type { Database } from '$lib/types/database-types';
 import mockGames from "$lib/mock-data/games.json";
 
 export const load = async () => {
