@@ -16,10 +16,6 @@ async def validation_exception_handler(request: Request, exc: RequestValidationE
     content=jsonable_encoder({"detail": exc.errors(), "body": exc.body}),
   )
 
-@app.get("/")
-def read_root():
-  return { "Hello": "World" }
-
 @app.post("/game")
 def create_game_files_from_webhook(body: WebhookPayload):
   create_game_files(body.record.id)
