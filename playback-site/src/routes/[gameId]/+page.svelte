@@ -3,6 +3,7 @@
   import { doRectsOverlap, getRectWithBuffer } from "$lib/utils/rectangle.js";
   import Field from "$lib/components/Field.svelte";
   import MatchDetailInfo from "$lib/components/MatchDetailInfo.svelte";
+  import PlaybackControl from "$lib/components/PlaybackControl.svelte";
 
   const { data } = $props();
 
@@ -42,9 +43,9 @@
   });
 </script>
 
-<div class="flex justify-center size-full">
+<div class="flex flex-col gap-6 self-center w-full max-w-200">
   <section
-    class="relative flex h-fit justify-center p-8 shadow-xl dark:shadow-lg dark:shadow-neutral-900 w-full max-w-200"
+    class="relative flex h-fit justify-center p-8 shadow-xl dark:shadow-lg dark:shadow-neutral-900 w-full"
   >
     {#if data.game && data.field}
       <MatchDetailInfo
@@ -83,4 +84,5 @@
       {/await}
     </Field>
   </section>
+  <PlaybackControl />
 </div>
