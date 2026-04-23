@@ -42,5 +42,5 @@
 
 <div
   bind:this={playerElement}
-  class="absolute transition-all bg-tertiary size-2 rounded-full"
+  class="absolute transition-all bg-tertiary size-2 rounded-full z-50"
 ></div>
