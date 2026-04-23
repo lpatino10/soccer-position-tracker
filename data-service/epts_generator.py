@@ -243,7 +243,24 @@ def create_game_files(game_id: str):
   field = SoccerField(**raw_field)
 
   # 3. Fetch TrackingEvent rows to get positions.
-  tracking_events = [TrackingEvent(**e) for e in supabase.table("TrackingEvent").select("*").eq("game_id", game.id).order("timestamp", desc=False).execute().data]
+  tracking_events = []
+  page = 0
+  while True:
+    response = (
+      supabase.table("TrackingEvent")
+        .select("*")
+        .range(page * 1000, (page + 1) * 1000 - 1)
+        .eq("game_id", game.id)
+        .order("timestamp", desc=False)
+        .execute()
+      )
+    data = response.data
+
+    if len(data) == 0:
+      break
+
+    tracking_events.extend([TrackingEvent(**e) for e in data])
+    page += 1
 
   # 4. Create metadata file with parametrized pieces.
   frame_count = len(tracking_events)
