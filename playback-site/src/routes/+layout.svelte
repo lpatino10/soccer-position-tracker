@@ -13,7 +13,9 @@
 	<div
 		class="border-b border-neutral-200 dark:border-neutral-500 flex items-center justify-between px-4 py-3"
 	>
-		<h2 class="font-semibold text-primary text-3xl">MATCH_REPLAY</h2>
+		<a href="/">
+			<h2 class="font-semibold text-primary text-3xl">MATCH_REPLAY</h2>
+		</a>
 		<ThemeToggle />
 	</div>
 	<div class="p-4 flex flex-1 flex-col">
