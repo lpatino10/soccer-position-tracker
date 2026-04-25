@@ -11,10 +11,10 @@
   const { isLoading }: Props = $props();
   const playbackState = getPlaybackState();
 
-  let seekElement: HTMLDivElement;
-  $effect(() => {
-    seekElement.style.left = `${playbackState.currentFrame === 0 ? 0 : (playbackState.currentFrame / (playbackState.frameCount - 1)) * 100}%`;
-  });
+  function onSeek(event: Event) {
+    const target = event.target as HTMLInputElement;
+    playbackState.currentFrame = Number(target.value);
+  }
 
   function onSpeedChange(event: Event) {
     const target = event.target as HTMLInputElement;
@@ -50,13 +50,14 @@
 {/snippet}
 
 <div class="flex flex-col bg-primary-600/40 gap-8 px-6 py-8 w-full">
-  <div class="relative bg-primary h-1 w-full">
-    <!-- This should ideally be an input with type range, but styling the seek element is a pain and this is just a side project. -->
-    <div
-      bind:this={seekElement}
-      class="appearance-none absolute left-0 -top-2.5 bg-primary h-6 w-1 cursor-grab"
-    ></div>
-  </div>
+  <input
+    class="appearance-none bg-transparent w-full"
+    oninput={onSeek}
+    type="range"
+    min="0"
+    max={`${playbackState.frameCount - 1}`}
+    value={`${playbackState.currentFrame}`}
+  />
 
   <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full">
     <p class="self-start text-xs text-primary">
@@ -133,3 +134,78 @@
     </div>
   </div>
 </div>
+
+<style>
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+  }
+
+  input[type="range"]:focus {
+    outline: none;
+  }
+
+  input[type="range"]::-ms-track {
+    width: 100%;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  /* Special styling for WebKit/Blink */
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 24px;
+    width: 6px;
+    background: var(--color-primary);
+    cursor: pointer;
+    margin-top: -10px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
+  }
+
+  /* All the same stuff for Firefox */
+  input[type="range"]::-moz-range-thumb {
+    height: 24px;
+    width: 6px;
+    background: var(--color-primary);
+    cursor: pointer;
+  }
+
+  /* All the same stuff for IE */
+  input[type="range"]::-ms-thumb {
+    height: 24px;
+    width: 6px;
+    background: var(--color-primary);
+    cursor: pointer;
+  }
+
+  input[type="range"]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: var(--color-primary);
+  }
+
+  input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: var(--color-primary);
+  }
+
+  input[type="range"]::-ms-track {
+    width: 100%;
+    height: 4px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    color: transparent;
+  }
+
+  input[type="range"]::-ms-fill-lower {
+    background: var(--color-primary);
+  }
+
+  input[type="range"]::-ms-fill-upper {
+    background: var(--color-primary);
+  }
+</style>
