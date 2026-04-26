@@ -14,7 +14,9 @@
 		class="border-b border-neutral-200 dark:border-neutral-500 flex items-center justify-between px-4 py-3"
 	>
 		<a href="/">
-			<h2 class="font-semibold text-primary text-3xl">MATCH_REPLAY</h2>
+			<h2 class="font-semibold text-primary text-2xl sm:text-3xl">
+				MATCH_REPLAY
+			</h2>
 		</a>
 		<ThemeToggle />
 	</div>
@@ -22,12 +24,12 @@
 		{@render children()}
 	</div>
 	<div
-		class="border-t border-neutral-200 dark:border-neutral-500 flex items-center justify-between px-4 py-3"
+		class="border-t border-neutral-200 dark:border-neutral-500 flex items-center justify-between px-2.5 sm:px-4 py-2 sm:py-3"
 	>
-		<p class="text-body text-sm">{`VER: ${version}`}</p>
+		<p class="text-body text-xs sm:text-sm">{`VER: ${version}`}</p>
 	</div>
 	<div
-		class="absolute rotate-90 right-0 bottom-0 origin-top-right -translate-x-1 text-body/25 whitespace-nowrap"
+		class="absolute rotate-90 right-0 bottom-0 origin-top-right -translate-x-1 text-body/25 text-sm sm:text-base whitespace-nowrap"
 	>
 		STATUS: ONLINE // LOGS: VERIFIED // POSITIONAL_DATA: SYNCED
 	</div>

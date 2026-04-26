@@ -10,15 +10,15 @@
     <div class="bg-secondary px-1 py-0.5 w-fit">
       <p class="text-headline text-[10px]">DATA_STREAM</p>
     </div>
-    <h1 class="font-semibold text-primary text-6xl">MATCH_LOG</h1>
+    <h1 class="font-semibold text-primary text-2xl sm:text-6xl">MATCH_LOG</h1>
   </div>
   <div class="flex flex-col items-end justify-end">
-    <p class="font-light text-body text-xs">
+    <p class="font-light text-body text-[10px] sm:text-xs">
       {`RECORDS_FOUND: ${totalMatches}`}
     </p>
-    <p class="font-light text-body text-xs">
+    <p class="font-light text-body text-[10px] sm:text-xs">
       {`LAST_SYNC: ${lastSync}`}
     </p>
-    <p class="text-primary text-xs">// REPLAY_ENGINE_ACTIVE</p>
+    <p class="text-primary text-[10px] sm:text-xs">// REPLAY_ENGINE_ACTIVE</p>
   </div>
 </div>

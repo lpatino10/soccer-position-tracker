@@ -21,9 +21,7 @@
 {#snippet darkMode()}
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    height="24px"
     viewBox="0 -960 960 960"
-    width="24px"
     fill="var(--color-neutral)"
   >
     <path
@@ -35,9 +33,7 @@
 {#snippet lightMode()}
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    height="24px"
     viewBox="0 -960 960 960"
-    width="24px"
     fill="var(--color-neutral)"
   >
     <path
@@ -48,7 +44,7 @@
 
 <button
   onclick={toggleTheme}
-  class="bg-primary cursor-pointer p-1.5"
+  class="bg-primary cursor-pointer size-6 sm:size-8 p-1"
   aria-label="Theme picker"
 >
   {#if !currentTheme || currentTheme.value === "light"}
