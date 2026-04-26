@@ -25,6 +25,8 @@
 
   $effect(() => {
     const currentPosition = positionData[playbackState.currentFrame];
+
+    // - 4px to center dot
     playerElement.style.left = `${currentPosition.x * fieldContainerWidth - 4}px`;
     playerElement.style.top = `${currentPosition.y * fieldContainerHeight - 4}px`;
   });

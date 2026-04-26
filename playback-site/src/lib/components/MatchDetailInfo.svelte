@@ -33,13 +33,13 @@
     className?.left,
   )}
 >
-  <p class="text-xs text-primary">MATCH_LOCATION</p>
-  <h3 class="text-2xl text-primary font-semibold uppercase">
+  <p class="text-[8px] sm:text-xs text-primary">MATCH_LOCATION</p>
+  <h3 class="text-sm sm:text-2xl text-primary font-semibold uppercase">
     {field.name.split(" ").join("_")}
   </h3>
   <div class="flex gap-2 items-center">
     <div class="flex bg-secondary items-center justify-center p-0.5 w-fit">
-      <p class="text-[10px] text-primary">
+      <p class="text-[6px] sm:text-[10px] text-primary">
         {#if field.orientation === "EW"}
           &lt;&gt; EW
         {:else}
@@ -47,7 +47,7 @@
         {/if}
       </p>
     </div>
-    <p class="text-[10px] text-primary opacity-70">
+    <p class="text-[6px] sm:text-[10px] text-primary opacity-70">
       {`LAT: ${field.min_lat}° N // LNG: ${field.min_lng}° E`}
     </p>
   </div>
@@ -60,11 +60,11 @@
   )}
 >
   <div class="flex gap-2 items-center justify-end">
-    <p class="text-xs text-primary">
+    <p class="text-[8px] sm:text-xs text-primary">
       {`${game.my_team_score} - ${game.opponent_score}`}
     </p>
-    <span class="text-xs text-primary">//</span>
-    <p class="text-xs text-primary">
+    <span class="text-[8px] sm:text-xs text-primary">//</span>
+    <p class="text-[8px] sm:text-xs text-primary">
       {#if game.my_team_score !== null && game.opponent_score !== null}
         {#if game.my_team_score > game.opponent_score}
           WIN
@@ -76,8 +76,8 @@
       {/if}
     </p>
   </div>
-  <h4 class="text-md text-primary font-semibold uppercase">
+  <h4 class="text-xs sm:text-md text-primary font-semibold uppercase">
     {game.position?.split(" ").join("_")}
   </h4>
-  <p class="text-xs text-primary">{game.created_at}</p>
+  <p class="text-[8px] sm:text-xs text-primary">{game.created_at}</p>
 </div>

@@ -39,13 +39,13 @@
       isLeftOverlapping = leftInfoEl
         ? doRectsOverlap(
             playerRect,
-            getRectWithBuffer(leftInfoEl.getBoundingClientRect(), 60),
+            getRectWithBuffer(leftInfoEl.getBoundingClientRect(), 20),
           )
         : false;
       isRightOverlapping = rightInfoEl
         ? doRectsOverlap(
             playerRect,
-            getRectWithBuffer(rightInfoEl.getBoundingClientRect(), 60),
+            getRectWithBuffer(rightInfoEl.getBoundingClientRect(), 20),
           )
         : false;
     });
