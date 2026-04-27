@@ -3,21 +3,28 @@
 
   let currentTheme = localStorageState("theme", "light");
 
+  function setThemeColor(color: string) {
+    document.getElementById("theme-color-meta")?.remove();
+    const meta = document.createElement("meta");
+    meta.name = "theme-color";
+    meta.id = "theme-color-meta";
+    meta.content = color;
+    document.head.appendChild(meta);
+  }
+
   function toggleTheme() {
     if (!currentTheme) {
       return;
     }
 
-    const themeColorMeta = document.getElementById("theme-color-meta");
-
     if (currentTheme.value === "light") {
       currentTheme.value = "dark";
       document.documentElement.classList.replace("light", "dark");
-      themeColorMeta?.setAttribute("content", "#080C0B");
+      setThemeColor("#080C0B");
     } else if (currentTheme.value === "dark") {
       currentTheme.value = "light";
       document.documentElement.classList.replace("dark", "light");
-      themeColorMeta?.setAttribute("content", "#F9F7E8");
+      setThemeColor("#F9F7E8");
     }
   }
 </script>
