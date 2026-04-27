@@ -1,5 +1,7 @@
 # Soccer Position Tracker
 
+![demo](./docs/match-replay-demo.gif)
+
 ### What is this?
 This is an exercise in working with [EPTS data](https://digitalhub.fifa.com/m/477d8daa7f0ac4c9/original/standard-transfer-format-documentation.pdf), a standard format by FIFA for tracking the position of soccer players and the ball.
 
