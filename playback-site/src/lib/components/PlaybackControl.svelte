@@ -33,7 +33,7 @@
 {#snippet playbackSpeedButton(speed: PlaybackSpeed, label: string)}
   <label
     for={`radio-${speed}`}
-    class="flex bg-neutral/70 text-primary has-checked:bg-primary has-checked:text-neutral w-fit px-1 sm:px-2 py-0.5 sm:py-1 cursor-pointer text-[10px] sm:text-xs has-disabled:cursor-default has-disabled:opacity-50"
+    class="flex bg-neutral/70 text-primary has-checked:bg-primary has-checked:text-neutral px-1 sm:px-2 py-0.5 sm:py-1 cursor-pointer text-[10px] sm:text-xs has-disabled:cursor-default has-disabled:opacity-50"
   >
     {label}
     <input
@@ -43,7 +43,7 @@
       value={speed}
       checked={speed === playbackState.speed}
       onchange={onSpeedChange}
-      class="appearance-none"
+      class="appearance-none size-0"
       disabled={isLoading}
     />
   </label>
@@ -60,9 +60,15 @@
   />
 
   <div class="grid grid-cols-[1fr_auto_1fr] items-center w-full">
-    <p class="self-start text-[10px] sm:text-xs text-primary">
-      {`FRAME: ${playbackState.currentFrame + 1}/${playbackState.frameCount}`}
-    </p>
+    <div
+      class="flex flex-col self-start sm:flex-row sm:gap-1 min-w-0 text-[10px] sm:text-xs text-primary"
+    >
+      <p>FRAME:</p>
+      <p>
+        {`${playbackState.currentFrame + 1}/${playbackState.frameCount}`}
+      </p>
+    </div>
+
     <fieldset class="flex gap-3 col-2 items-center" disabled={isLoading}>
       <button
         class="cursor-pointer text-primary size-4 sm:size-6 disabled:cursor-default disabled:opacity-50"
@@ -118,9 +124,9 @@
       <div class="size-4 sm:size-6"></div>
     </fieldset>
 
-    <div class="flex flex-col gap-1 justify-self-end">
+    <div class="flex flex-col gap-1 justify-self-end min-w-0">
       <p class="text-[6px] sm:text-[10px] text-primary">PLAYBACK_SPEED</p>
-      <fieldset class="flex gap-1">
+      <fieldset class="flex gap-1 min-w-0">
         {@render playbackSpeedButton(0.5, "0.5X")}
         {@render playbackSpeedButton(1, "1.0X")}
         {@render playbackSpeedButton(2, "2.0X")}
