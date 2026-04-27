@@ -33,7 +33,7 @@
 {#snippet playbackSpeedButton(speed: PlaybackSpeed, label: string)}
   <label
     for={`radio-${speed}`}
-    class="flex bg-neutral/70 text-primary has-checked:bg-primary has-checked:text-neutral px-1 sm:px-2 py-0.5 sm:py-1 cursor-pointer text-[10px] sm:text-xs has-disabled:cursor-default has-disabled:opacity-50"
+    class="flex bg-neutral/70 text-primary has-checked:bg-primary has-checked:text-neutral w-fit px-1 sm:px-2 py-0.5 sm:py-1 cursor-pointer text-[10px] sm:text-xs has-disabled:cursor-default has-disabled:opacity-50"
   >
     {label}
     <input

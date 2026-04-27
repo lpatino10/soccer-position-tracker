@@ -83,7 +83,7 @@
     >
       {#await positions}
         <span
-          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-tertiary-500 text-2xl animate-pulse"
+          class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-semibold text-tertiary-500 text-lg sm:text-2xl animate-pulse z-50"
         >
           PLAYBACK_LOADING
         </span>
